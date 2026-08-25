@@ -8,7 +8,11 @@
     "title": "Color, choice, and a little bit of brave",
     "excerpt": "A classroom snapshot celebrating student voice through color mixing.",
     "accent": "#00AFD7",
-    "featured": true
+    "featured": true,
+    "hashtags": [
+      "#artofedcommunity",
+      "#theartofed"
+    ]
   },
   {
     "id": 2,
@@ -18,7 +22,11 @@
     "label": "@theartofed",
     "title": "The setup is part of the lesson",
     "excerpt": "Thoughtful materials and clear choices help young artists get started.",
-    "accent": "#E44398"
+    "accent": "#E44398",
+    "hashtags": [
+      "#artofedcommunity",
+      "#theartofed"
+    ]
   },
   {
     "id": 3,
@@ -28,7 +36,11 @@
     "label": "#artofed",
     "title": "Make room for many right answers",
     "excerpt": "An invitation to notice how different approaches can share the same prompt.",
-    "accent": "#82C341"
+    "accent": "#82C341",
+    "hashtags": [
+      "#artofedcommunity",
+      "#theartofed"
+    ]
   },
   {
     "id": 4,
@@ -38,7 +50,11 @@
     "label": "@theartofed",
     "title": "A wall full of thinking",
     "excerpt": "Process work makes student growth visible, one layer at a time.",
-    "accent": "#FFCE51"
+    "accent": "#FFCE51",
+    "hashtags": [
+      "#artofedcommunity",
+      "#theartofed"
+    ]
   },
   {
     "id": 5,
@@ -48,7 +64,11 @@
     "label": "#artofed",
     "title": "Display the learning, not just the final piece",
     "excerpt": "A simple gallery moment that honors experimentation and revision.",
-    "accent": "#025A89"
+    "accent": "#025A89",
+    "hashtags": [
+      "#artofedcommunity",
+      "#theartofed"
+    ]
   },
   {
     "id": 6,
@@ -58,6 +78,10 @@
     "label": "@theartofed",
     "title": "Ready for the next idea",
     "excerpt": "A behind-the-scenes look at the tools that make creative risk-taking possible.",
-    "accent": "#00AFD7"
+    "accent": "#00AFD7",
+    "hashtags": [
+      "#artofedcommunity",
+      "#theartofed"
+    ]
   }
 ]

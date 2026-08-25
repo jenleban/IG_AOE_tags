@@ -23,8 +23,8 @@ function escapeHtml(value) {
 function getFilteredPosts() {
   const query = state.query.trim().toLowerCase();
   return state.posts.filter((post) => {
-    const matchesFilter = state.filter === "all" || post.label === state.filter;
-    const searchable = `${post.title} ${post.excerpt} ${post.label}`.toLowerCase();
+    const matchesFilter = state.filter === "all" || post.label === state.filter || post.hashtags.includes(state.filter);
+    const searchable = `${post.title} ${post.excerpt} ${post.label} ${post.hashtags.join(" ")}`.toLowerCase();
     return matchesFilter && (!query || searchable.includes(query));
   });
 }
