@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "image": "https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=900&q=85",
+    "alt": "Colorful student artwork arranged on a studio wall",
+    "source": "Sample classroom post",
+    "label": "#artofed",
+    "title": "Color, choice, and a little bit of brave",
+    "excerpt": "A classroom snapshot celebrating student voice through color mixing.",
+    "accent": "#00AFD7",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "image": "https://images.unsplash.com/photo-1564399579883-451a5d44ec08?auto=format&fit=crop&w=900&q=85",
+    "alt": "Art supplies and a paintbrush on a work table",
+    "source": "Sample classroom post",
+    "label": "@theartofed",
+    "title": "The setup is part of the lesson",
+    "excerpt": "Thoughtful materials and clear choices help young artists get started.",
+    "accent": "#E44398"
+  },
+  {
+    "id": 3,
+    "image": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=900&q=85",
+    "alt": "Bright abstract paintings displayed together",
+    "source": "Sample classroom post",
+    "label": "#artofed",
+    "title": "Make room for many right answers",
+    "excerpt": "An invitation to notice how different approaches can share the same prompt.",
+    "accent": "#82C341"
+  },
+  {
+    "id": 4,
+    "image": "https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=900&q=85",
+    "alt": "Abstract artwork with bold blue, pink, and yellow shapes",
+    "source": "Sample classroom post",
+    "label": "@theartofed",
+    "title": "A wall full of thinking",
+    "excerpt": "Process work makes student growth visible, one layer at a time.",
+    "accent": "#FFCE51"
+  },
+  {
+    "id": 5,
+    "image": "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=900&q=85",
+    "alt": "Framed paintings in a bright gallery space",
+    "source": "Sample classroom post",
+    "label": "#artofed",
+    "title": "Display the learning, not just the final piece",
+    "excerpt": "A simple gallery moment that honors experimentation and revision.",
+    "accent": "#025A89"
+  },
+  {
+    "id": 6,
+    "image": "https://images.unsplash.com/photo-1594784053539-4c4f3bb35f4a?auto=format&fit=crop&w=900&q=85",
+    "alt": "Paint palette and colorful brushes ready for use",
+    "source": "Sample classroom post",
+    "label": "@theartofed",
+    "title": "Ready for the next idea",
+    "excerpt": "A behind-the-scenes look at the tools that make creative risk-taking possible.",
+    "accent": "#00AFD7"
+  }
+]
