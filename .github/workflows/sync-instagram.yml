@@ -1,0 +1,39 @@
+name: Sync Instagram gallery
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "instagram-gallery-sync"
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Sync recent Instagram hashtag posts
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          IG_USER_ID: "17841401832996914"
+          GRAPH_VERSION: "v26.0"
+        run: python3 scripts/sync-instagram.py
+
+      - name: Commit updated gallery data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/posts.json
+          if git diff --cached --quiet; then
+            echo "No gallery data changes to commit."
+          else
+            git commit -m "Update Instagram gallery data"
+            git push
+          fi
