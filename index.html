@@ -3,13 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="A community gallery of art education ideas shared with #artofed and @theartofed." />
-    <title>Art in the Wild | The Art of Education</title>
+    <meta
+      name="description"
+      content="A community spotlight featuring classroom ideas, artwork, and creative moments shared by art educators and friends of The Art of Education."
+    />
+    <title>The Art of Education Community Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
     <main class="page-shell">
       <header class="hero">
@@ -21,57 +28,165 @@
               <div class="brand-subtitle">Community gallery</div>
             </div>
           </div>
-          <a class="follow-link" href="https://www.instagram.com/theartofed/" target="_blank" rel="noreferrer">Follow @theartofed <span aria-hidden="true">↗</span></a>
+
+          <a
+            class="follow-link"
+            href="https://www.instagram.com/theartofed/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Follow @theartofed
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
+
         <div class="hero-grid">
           <div>
-            <div class="eyebrow"><span class="status-dot"></span> Prototype feed</div>
-            <h1>Art in the wild.</h1>
-            <p class="hero-copy">A living gallery of ideas, process, and possibility from the art education community.</p>
-            <button class="text-button" id="info-toggle" type="button" aria-expanded="false">How this gallery works <span aria-hidden="true">⌄</span></button>
+            <div class="eyebrow">
+              <span class="status-dot"></span>
+              Community spotlight
+            </div>
+
+            <h1>
+              Celebrating the creativity of the art education community
+            </h1>
+
+            <p class="hero-copy">
+              Explore classroom ideas, artwork, and creative moments shared by
+              art educators and friends of The Art of Education.
+            </p>
+
+            <button
+              class="text-button"
+              id="info-toggle"
+              type="button"
+              aria-expanded="false"
+            >
+              How this gallery works
+              <span aria-hidden="true">⌄</span>
+            </button>
+
             <div class="info-panel" id="info-panel" hidden>
-              This prototype combines hashtagged and tagged posts into one searchable gallery. The production version can add moderation, scheduled syncing, and a direct Meta API connection.
+              A living collection of inspiration from educators, artists, and
+              classrooms making art education more meaningful every day. Posts
+              are gathered from the AOE community and updated automatically.
             </div>
           </div>
+
           <div class="hero-note">
-            <strong>2 ways in</strong>
-            <p>Find classroom inspiration through <b>#artofed</b> or <b>@theartofed</b>.</p>
+            <strong>Join the conversation</strong>
+            <p>
+              Find inspiration through <b>#artofed</b>,
+              <b>#artofedcommunity</b>, <b>#theartofed</b>, and
+              <b>@theartofed</b>.
+            </p>
           </div>
         </div>
       </header>
 
       <section class="controls" aria-label="Gallery controls">
-        <div class="filter-row" role="tablist" aria-label="Post filters">
-          <button class="filter-button active" type="button" data-filter="all" role="tab" aria-selected="true">All posts</button>
-          <button class="filter-button" type="button" data-filter="#artofed" role="tab" aria-selected="false">#artofed</button>
-          <button class="filter-button" type="button" data-filter="#artofedcommunity" role="tab" aria-selected="false">#artofedcommunity</button>
-          <button class="filter-button" type="button" data-filter="#theartofed" role="tab" aria-selected="false">#theartofed</button>
-          <button class="filter-button" type="button" data-filter="@theartofed" role="tab" aria-selected="false">@theartofed</button>
+        <div
+          class="filter-row"
+          role="tablist"
+          aria-label="Post filters"
+        >
+          <button
+            class="filter-button active"
+            type="button"
+            data-filter="all"
+            role="tab"
+            aria-selected="true"
+          >
+            All posts
+          </button>
+
+          <button
+            class="filter-button"
+            type="button"
+            data-filter="#artofed"
+            role="tab"
+            aria-selected="false"
+          >
+            #artofed
+          </button>
+
+          <button
+            class="filter-button"
+            type="button"
+            data-filter="#artofedcommunity"
+            role="tab"
+            aria-selected="false"
+          >
+            #artofedcommunity
+          </button>
+
+          <button
+            class="filter-button"
+            type="button"
+            data-filter="#theartofed"
+            role="tab"
+            aria-selected="false"
+          >
+            #theartofed
+          </button>
+
+          <button
+            class="filter-button"
+            type="button"
+            data-filter="@theartofed"
+            role="tab"
+            aria-selected="false"
+          >
+            @theartofed
+          </button>
         </div>
+
         <label class="search-wrap">
           <span class="search-icon" aria-hidden="true">⌕</span>
           <span class="visually-hidden">Search the gallery</span>
-          <input id="search-input" type="search" placeholder="Search the gallery" autocomplete="off" />
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Search the gallery"
+            autocomplete="off"
+          />
         </label>
       </section>
 
       <div class="feed-meta">
-        <p id="result-count">Loading preview posts…</p>
-        <p class="ready-status"><span class="status-dot"></span> Ready for API connection</p>
+        <p id="result-count">Loading community posts…</p>
+        <p class="ready-status">
+          <span class="status-dot"></span>
+          Live community gallery
+        </p>
       </div>
 
       <section class="gallery" id="gallery" aria-live="polite"></section>
+
       <div class="empty-state" id="empty-state" hidden>
-        <strong>No preview posts match that search.</strong>
-        <button class="text-button" id="clear-filters" type="button">Clear filters</button>
+        <strong>No community posts match that search.</strong>
+        <button class="text-button" id="clear-filters" type="button">
+          Clear filters
+        </button>
       </div>
-      <div class="load-more-wrap"><button class="load-more" id="load-more" type="button" hidden>Load more posts</button></div>
+
+      <div class="load-more-wrap">
+        <button
+          class="load-more"
+          id="load-more"
+          type="button"
+          hidden
+        >
+          Load more posts
+        </button>
+      </div>
 
       <footer class="footer">
-        <span>A community gallery for art educators.</span>
+        <span>A community spotlight for art educators.</span>
         <strong>#artofed · @theartofed</strong>
       </footer>
     </main>
+
     <script src="app.js" defer></script>
   </body>
 </html>
