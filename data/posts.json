@@ -1,20 +1,5 @@
 [
   {
-    "id": "instagram-18085653365288764",
-    "instagram_media_id": "18085653365288764",
-    "image": "https://scontent-bru2-1.cdninstagram.com/v/t51.82787-15/791659898_18427619740151765_1721839209773165777_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=qH2gKGofM6AQ7kNvwGpnQ13&_nc_oc=Adok3_nIN56Gm_edmlLBPIaVI4zmCPqfa8CBp67z6Vma8dRMbDdS02y7EKE1t5QsIeI&_nc_zt=23&_nc_ht=scontent-bru2-1.cdninstagram.com&edm=AL-3X8kEAAAA&_nc_gid=jQK1HD7BP3C8ne0qUELSJQ&oh=00_AQJAVPbWAbhss3B5a2JNbULBg54pS2hX0RhuZR9gBtt-vw&oe=6A9E652D",
-    "alt": "Instagram post shared by the art education community",
-    "source": "Instagram mention",
-    "label": "@theartofed",
-    "title": "One of two of my newest totem sculptures, this is a commissioned piece inspired by #macken",
-    "excerpt": "One of two of my newest totem sculptures, this is a commissioned piece inspired by #mackenziechilds #ceramicsculpture #ceramic",
-    "accent": "#E44398",
-    "featured": false,
-    "permalink": "https://www.instagram.com/p/Dcrk6QcoI9D/",
-    "media_type": "CAROUSEL_ALBUM",
-    "timestamp": "2026-08-30T22:23:36+0000"
-  },
-  {
     "id": "instagram-18129012730668760",
     "instagram_media_id": "18129012730668760",
     "image": "https://scontent-fra5-1.cdninstagram.com/v/t15.5256-10/791305174_4657299914500765_779775013576683372_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=cgMlH-UrC7IQ7kNvwGsIUGC&_nc_oc=AdoVODZz0GFhuQoHJZBqVEvW22oib7c_K0QwQjKm-4ZuJoGLZSAvL-7xooAgDAQHK0g&_nc_zt=23&_nc_ht=scontent-fra5-1.cdninstagram.com&edm=AL-3X8kEAAAA&_nc_gid=GafQX35cO6_GoDYsPAqvFA&_nc_tpa=Q5bMBQJ14SANXnhIym_1oU0bfVnoAjCESIindZifWMRToXQd3_KwTEeGknmA0nMcjwNWkEoBhMRhGd1SpA&oh=00_AQKdZByg9F8dddBENvzCcdNZ4z_DCeaX7w8Y1L9TViW73w&oe=6A9E3732",
@@ -105,6 +90,21 @@
     "permalink": "https://www.instagram.com/reel/DctVbacBaRK/",
     "media_type": "VIDEO",
     "timestamp": "2026-08-31T14:54:13+0000"
+  },
+  {
+    "id": "instagram-18085653365288764",
+    "instagram_media_id": "18085653365288764",
+    "image": "https://scontent-bru2-1.cdninstagram.com/v/t51.82787-15/791659898_18427619740151765_1721839209773165777_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=qH2gKGofM6AQ7kNvwGpnQ13&_nc_oc=Adok3_nIN56Gm_edmlLBPIaVI4zmCPqfa8CBp67z6Vma8dRMbDdS02y7EKE1t5QsIeI&_nc_zt=23&_nc_ht=scontent-bru2-1.cdninstagram.com&edm=AL-3X8kEAAAA&_nc_gid=jQK1HD7BP3C8ne0qUELSJQ&oh=00_AQJAVPbWAbhss3B5a2JNbULBg54pS2hX0RhuZR9gBtt-vw&oe=6A9E652D",
+    "alt": "Instagram post shared by the art education community",
+    "source": "Instagram mention",
+    "label": "@theartofed",
+    "title": "One of two of my newest totem sculptures, this is a commissioned piece inspired by #macken",
+    "excerpt": "One of two of my newest totem sculptures, this is a commissioned piece inspired by #mackenziechilds #ceramicsculpture #ceramic",
+    "accent": "#E44398",
+    "featured": false,
+    "permalink": "https://www.instagram.com/p/Dcrk6QcoI9D/",
+    "media_type": "CAROUSEL_ALBUM",
+    "timestamp": "2026-08-30T22:23:36+0000"
   },
   {
     "id": "instagram-18113206885793162",
