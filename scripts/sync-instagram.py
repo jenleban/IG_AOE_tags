@@ -91,20 +91,32 @@ def recent_media(hashtag_id_value):
     return result.get("data", [])
 
 
-def refresh_media_source(post):
-    """Ask Meta for a fresh URL, especially for older posts with expired URLs."""
+def refresh_mentioned_media_source(post):
+    """Refresh a caption-mention through Meta's supported mentioned_media expansion.
+
+    A direct GET /<media-id> is not reliable for media owned by other accounts.
+    Hashtag media also cannot be refreshed after the 24-hour recent_media window.
+    """
     media_id = media_id_for(post)
-    if not media_id:
-        return None
-    try:
-        payload = graph_get(media_id, {"fields": "id,media_type,media_url,thumbnail_url"})
-    except Exception as exc:
-        print(f"Could not refresh media URL for {media_id}: {exc}")
+    if not media_id or post.get("source") != "Instagram mention":
         return None
 
-    media_type = payload.get("media_type") or post.get("media_type")
-    url = payload.get("thumbnail_url") if media_type == "VIDEO" else payload.get("media_url")
-    url = url or payload.get("media_url") or payload.get("thumbnail_url")
+    fields = f"mentioned_media.media_id({media_id}){{id,media_type,media_url,thumbnail_url,permalink,caption}}"
+    try:
+        payload = graph_get(IG_USER_ID, {"fields": fields})
+    except Exception as exc:
+        print(f"Could not refresh mention media URL for {media_id}: {exc}")
+        return None
+
+    items = (payload.get("mentioned_media") or {}).get("data", [])
+    if not items:
+        print(f"Meta returned no refreshable mention media for {media_id}")
+        return None
+
+    refreshed = items[0]
+    media_type = refreshed.get("media_type") or post.get("media_type")
+    url = refreshed.get("thumbnail_url") if media_type == "VIDEO" else refreshed.get("media_url")
+    url = url or refreshed.get("media_url") or refreshed.get("thumbnail_url")
     if url:
         post["media_type"] = media_type or post.get("media_type", "IMAGE")
         return url
@@ -128,8 +140,9 @@ def cache_post_image(post):
     if source_url:
         candidate_urls.append(source_url)
 
-    # Try Meta for a fresh URL first when the current URL is old or missing.
-    refreshed_url = refresh_media_source(post)
+    # Meta supports a specific refresh path for caption mentions. Hashtag
+    # media outside the 24-hour recent_media window cannot be rehydrated here.
+    refreshed_url = refresh_mentioned_media_source(post)
     if refreshed_url and refreshed_url not in candidate_urls:
         candidate_urls.insert(0, refreshed_url)
 
