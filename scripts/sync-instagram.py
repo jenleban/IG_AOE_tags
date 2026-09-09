@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
-"""Sync recent public hashtag media into data/posts.json.
+"""Sync Instagram posts and cache their images locally in the repository.
 
-Hashtag posts publish automatically. IDs in data/removed-posts.json are
-excluded so a removed post is not re-imported on the next sync.
+Instagram media URLs are temporary CDN URLs. This script keeps the original
+URL for reference, downloads a stable local copy into assets/instagram/, and
+stores that local path in the post's image field.
 """
 import hashlib
 import json
+import mimetypes
 import os
+import re
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -17,6 +21,8 @@ ACCESS_TOKEN = os.environ.get("META_ACCESS_TOKEN")
 HASHTAGS = ["artofed", "artofedcommunity", "theartofed"]
 DATA_PATH = Path("data/posts.json")
 REMOVED_PATH = Path("data/removed-posts.json")
+IMAGE_DIR = Path("assets/instagram")
+MAX_IMAGE_BYTES = 25 * 1024 * 1024
 
 if not ACCESS_TOKEN:
     raise SystemExit("META_ACCESS_TOKEN is not set")
@@ -37,6 +43,39 @@ def graph_get(path, params):
     return payload
 
 
+def download_image(url, destination):
+    request = urllib.request.Request(url, headers={"User-Agent": "AOE-Instagram-Gallery-Sync/1.0"})
+    with urllib.request.urlopen(request, timeout=60) as response:
+        content_type = response.headers.get_content_type()
+        data = response.read(MAX_IMAGE_BYTES + 1)
+    if len(data) > MAX_IMAGE_BYTES:
+        raise RuntimeError(f"image exceeds {MAX_IMAGE_BYTES // (1024 * 1024)} MB")
+    destination.write_bytes(data)
+    return content_type
+
+
+def extension_for(content_type, url):
+    extensions = {
+        "image/jpeg": ".jpg",
+        "image/png": ".png",
+        "image/webp": ".webp",
+        "image/gif": ".gif",
+    }
+    if content_type in extensions:
+        return extensions[content_type]
+    guessed = Path(urllib.parse.urlparse(url).path).suffix.lower()
+    return guessed if guessed in {".jpg", ".jpeg", ".png", ".webp", ".gif"} else ".jpg"
+
+
+def safe_id(post):
+    value = str(post.get("instagram_media_id") or post.get("id") or "unknown")
+    return re.sub(r"[^A-Za-z0-9._-]", "_", value)
+
+
+def media_id_for(post):
+    return str(post.get("instagram_media_id") or post.get("id") or "")
+
+
 def hashtag_id(hashtag):
     result = graph_get("ig_hashtag_search", {"user_id": IG_USER_ID, "q": hashtag})
     items = result.get("data", [])
@@ -50,6 +89,69 @@ def recent_media(hashtag_id_value):
         {"user_id": IG_USER_ID, "fields": fields, "limit": "50"},
     )
     return result.get("data", [])
+
+
+def refresh_media_source(post):
+    """Ask Meta for a fresh URL, especially for older posts with expired URLs."""
+    media_id = media_id_for(post)
+    if not media_id:
+        return None
+    try:
+        payload = graph_get(media_id, {"fields": "id,media_type,media_url,thumbnail_url"})
+    except Exception as exc:
+        print(f"Could not refresh media URL for {media_id}: {exc}")
+        return None
+
+    media_type = payload.get("media_type") or post.get("media_type")
+    url = payload.get("thumbnail_url") if media_type == "VIDEO" else payload.get("media_url")
+    url = url or payload.get("media_url") or payload.get("thumbnail_url")
+    if url:
+        post["media_type"] = media_type or post.get("media_type", "IMAGE")
+        return url
+    return None
+
+
+def cache_post_image(post):
+    IMAGE_DIR.mkdir(parents=True, exist_ok=True)
+    identifier = safe_id(post)
+    existing_local = sorted(IMAGE_DIR.glob(f"{identifier}.*"))
+    current_image = str(post.get("image") or "")
+
+    if current_image.startswith("assets/instagram/") and Path(current_image).exists():
+        return True
+    if existing_local:
+        post["image"] = existing_local[0].as_posix()
+        return True
+
+    source_url = post.get("source_image_url") or (current_image if current_image.startswith("http") else "")
+    candidate_urls = []
+    if source_url:
+        candidate_urls.append(source_url)
+
+    # Try Meta for a fresh URL first when the current URL is old or missing.
+    refreshed_url = refresh_media_source(post)
+    if refreshed_url and refreshed_url not in candidate_urls:
+        candidate_urls.insert(0, refreshed_url)
+
+    for url in candidate_urls:
+        try:
+            temporary = IMAGE_DIR / f".{identifier}.download"
+            content_type = download_image(url, temporary)
+            extension = extension_for(content_type, url)
+            destination = IMAGE_DIR / f"{identifier}{extension}"
+            temporary.replace(destination)
+            post["image"] = destination.as_posix()
+            post["source_image_url"] = url
+            print(f"Cached {media_id_for(post)} -> {destination}")
+            return True
+        except Exception as exc:
+            print(f"Could not cache {media_id_for(post)} from {url}: {exc}")
+            temporary = IMAGE_DIR / f".{identifier}.download"
+            if temporary.exists():
+                temporary.unlink()
+
+    print(f"WARNING: no stable image available for {media_id_for(post)}")
+    return False
 
 
 def accent_for(post_id):
@@ -72,6 +174,7 @@ def normalize(post, hashtag):
     return {
         "id": post.get("id"),
         "image": media_url,
+        "source_image_url": media_url,
         "alt": caption[:180] or "Public Instagram post from the art education community",
         "source": "Instagram community post",
         "label": f"#{hashtag}",
@@ -108,16 +211,17 @@ def is_removed(post, removed_ids):
 
 
 def merge_posts(existing, incoming, removed_ids):
-    existing = [
-        post for post in existing
-        if post.get("id") is not None and not is_removed(post, removed_ids)
-    ]
-    incoming = [
-        post for post in incoming
-        if post.get("id") is not None and not is_removed(post, removed_ids)
-    ]
+    cleaned_existing = []
+    for post in existing:
+        if post.get("id") is None or is_removed(post, removed_ids):
+            continue
+        if not post.get("source_image_url") and str(post.get("image", "")).startswith("http"):
+            post["source_image_url"] = post["image"]
+        cleaned_existing.append(post)
 
-    by_id = {str(post["id"]): post for post in existing}
+    incoming = [post for post in incoming if post.get("id") is not None and not is_removed(post, removed_ids)]
+    by_id = {str(post["id"]): post for post in cleaned_existing}
+
     for post in incoming:
         key = str(post["id"])
         if key in by_id:
@@ -126,13 +230,13 @@ def merge_posts(existing, incoming, removed_ids):
             current["label"] = current["hashtags"][0] if current["hashtags"] else post["label"]
             current["permalink"] = post.get("permalink") or current.get("permalink")
             current["timestamp"] = post.get("timestamp") or current.get("timestamp")
+            if post.get("source_image_url"):
+                current["source_image_url"] = post["source_image_url"]
         else:
             by_id[key] = post
 
     live_posts = [post for post in by_id.values() if post.get("source") != "Sample classroom post"]
     sample_posts = [post for post in by_id.values() if post.get("source") == "Sample classroom post"]
-
-    # Keep sample artwork visible only when no live community posts are available.
     if not live_posts:
         return sample_posts
 
@@ -153,7 +257,13 @@ for hashtag in HASHTAGS:
     print(f"#{hashtag}: {len(media)} recent posts")
     incoming.extend(normalize(post, hashtag) for post in media)
 
-merged = merge_posts(existing, incoming, removed_ids)
-DATA_PATH.write_text(json.dumps(merged, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-print(f"Wrote {len(merged)} posts to {DATA_PATH}")
+posts = merge_posts(existing, incoming, removed_ids)
+cache_successes = 0
+for post in posts:
+    if cache_post_image(post):
+        cache_successes += 1
+
+DATA_PATH.write_text(json.dumps(posts, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+print(f"Wrote {len(posts)} posts to {DATA_PATH}")
+print(f"Cached or confirmed {cache_successes} stable images")
 print(f"Excluded {len(removed_ids)} removed post IDs")
