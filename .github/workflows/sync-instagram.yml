@@ -19,21 +19,21 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Sync recent Instagram hashtag posts
+      - name: Sync posts and cache Instagram images
         env:
           META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
           IG_USER_ID: "17841401832996914"
           GRAPH_VERSION: "v26.0"
         run: python3 scripts/sync-instagram.py
 
-      - name: Commit updated gallery data
+      - name: Commit updated gallery data and cached images
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/posts.json data/pending-posts.json
+          git add data/posts.json assets/instagram
           if git diff --cached --quiet; then
-            echo "No gallery data changes to commit."
+            echo "No gallery data or image-cache changes to commit."
           else
-            git commit -m "Update Instagram gallery data"
+            git commit -m "Update Instagram gallery and image cache"
             git push
           fi
