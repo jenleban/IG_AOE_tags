@@ -2,7 +2,7 @@ const state = {
   posts: [],
   filter: "all",
   query: "",
-  visibleCount: 4,
+  visibleCount: 6,
 };
 
 const gallery = document.querySelector("#gallery");
@@ -137,7 +137,7 @@ async function loadPosts() {
 document.querySelectorAll(".filter-button").forEach((button) => {
   button.addEventListener("click", () => {
     state.filter = button.dataset.filter;
-    state.visibleCount = 4;
+    state.visibleCount = 6;
 
     document.querySelectorAll(".filter-button").forEach((item) => {
       const active = item === button;
@@ -151,19 +151,19 @@ document.querySelectorAll(".filter-button").forEach((button) => {
 
 searchInput.addEventListener("input", (event) => {
   state.query = event.target.value;
-  state.visibleCount = 4;
+  state.visibleCount = 6;
   render();
 });
 
 loadMore.addEventListener("click", () => {
-  state.visibleCount += 2;
+  state.visibleCount += 3;
   render();
 });
 
 document.querySelector("#clear-filters").addEventListener("click", () => {
   state.filter = "all";
   state.query = "";
-  state.visibleCount = 4;
+  state.visibleCount = 6;
   searchInput.value = "";
   document.querySelector('[data-filter="all"]').click();
 });
