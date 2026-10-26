@@ -276,7 +276,7 @@ for post in posts:
     if cache_post_image(post):
         cache_successes += 1
 
-DATA_PATH.write_text(json.dumps(posts, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+DATA_PATH.write_text(json.dumps(posts, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 print(f"Wrote {len(posts)} posts to {DATA_PATH}")
 print(f"Cached or confirmed {cache_successes} stable images")
 print(f"Excluded {len(removed_ids)} removed post IDs")
