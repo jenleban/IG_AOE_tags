@@ -10,6 +10,7 @@ import json
 import mimetypes
 import os
 import re
+import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -22,7 +23,7 @@ HASHTAGS = ["artofed", "artofedcommunity", "theartofed"]
 DATA_PATH = Path("data/posts.json")
 REMOVED_PATH = Path("data/removed-posts.json")
 IMAGE_DIR = Path("assets/instagram")
-MAX_IMAGE_BYTES = 25 * 1024 * 1024
+MAX_MEDIA_BYTES = 80 * 1024 * 1024
 
 if not ACCESS_TOKEN:
     raise SystemExit("META_ACCESS_TOKEN is not set")
@@ -43,15 +44,33 @@ def graph_get(path, params):
     return payload
 
 
-def download_image(url, destination):
+def download_media(url, destination):
     request = urllib.request.Request(url, headers={"User-Agent": "AOE-Instagram-Gallery-Sync/1.0"})
-    with urllib.request.urlopen(request, timeout=60) as response:
+    with urllib.request.urlopen(request, timeout=90) as response:
         content_type = response.headers.get_content_type()
-        data = response.read(MAX_IMAGE_BYTES + 1)
-    if len(data) > MAX_IMAGE_BYTES:
-        raise RuntimeError(f"image exceeds {MAX_IMAGE_BYTES // (1024 * 1024)} MB")
+        data = response.read(MAX_MEDIA_BYTES + 1)
+    if len(data) > MAX_MEDIA_BYTES:
+        raise RuntimeError(f"media exceeds {MAX_MEDIA_BYTES // (1024 * 1024)} MB")
     destination.write_bytes(data)
     return content_type
+
+
+def make_video_thumbnail(video_path, destination):
+    """Extract a JPEG still from a downloaded Reel/video using ffmpeg."""
+    command = [
+        "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+        "-ss", "0.5", "-i", str(video_path),
+        "-frames:v", "1", "-vf", "scale='min(1280,iw)':-2",
+        str(destination),
+    ]
+    try:
+        subprocess.run(command, check=True, timeout=60)
+    except FileNotFoundError as exc:
+        raise RuntimeError("ffmpeg is not available on the runner") from exc
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"ffmpeg could not create a thumbnail: {exc}") from exc
+    if not destination.exists() or destination.stat().st_size == 0:
+        raise RuntimeError("ffmpeg created no thumbnail")
 
 
 def extension_for(content_type, url):
@@ -149,10 +168,16 @@ def cache_post_image(post):
     for url in candidate_urls:
         try:
             temporary = IMAGE_DIR / f".{identifier}.download"
-            content_type = download_image(url, temporary)
-            extension = extension_for(content_type, url)
-            destination = IMAGE_DIR / f"{identifier}{extension}"
-            temporary.replace(destination)
+            content_type = download_media(url, temporary)
+            is_video = post.get("media_type") == "VIDEO" or content_type.startswith("video/")
+            if is_video and not content_type.startswith("image/"):
+                destination = IMAGE_DIR / f"{identifier}.jpg"
+                make_video_thumbnail(temporary, destination)
+                temporary.unlink(missing_ok=True)
+            else:
+                extension = extension_for(content_type, url)
+                destination = IMAGE_DIR / f"{identifier}{extension}"
+                temporary.replace(destination)
             post["image"] = destination.as_posix()
             post["source_image_url"] = url
             print(f"Cached {media_id_for(post)} -> {destination}")
@@ -276,7 +301,7 @@ for post in posts:
     if cache_post_image(post):
         cache_successes += 1
 
-DATA_PATH.write_text(json.dumps(posts, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+DATA_PATH.write_text(json.dumps(posts, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 print(f"Wrote {len(posts)} posts to {DATA_PATH}")
 print(f"Cached or confirmed {cache_successes} stable images")
 print(f"Excluded {len(removed_ids)} removed post IDs")
