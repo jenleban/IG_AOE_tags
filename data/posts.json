@@ -1,5 +1,24 @@
 [
   {
+    "id": "17971748675963301",
+    "image": "assets/instagram/17971748675963301.jpg",
+    "source_image_url": "https://scontent-sjc6-1.cdninstagram.com/v/t51.82787-15/895953129_18113561867337309_3817560908555844863_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=FnH9DWbRJjUQ7kNvwHFte5o&_nc_oc=AdruuA00wCrO6lUv7vnpaBZNAkLspm0i4Q0SlyVVBGJ-MtpaBSbGUXDbZDpKXLifeig&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&edm=AEoDcc0EAAAA&_nc_gid=oEFdJolH6WqnKsQRjCi7oA&oh=00_AQRYepW_foroNJGMGMMhjNWSMWdBPzJZ3NFi2v6Qch3ZqA&oe=6AF8DA51",
+    "alt": "#realismtoabstraction #portrait #comics #collegeart #collegeartprofessor #comicsinarteducation #artofed",
+    "source": "Instagram community post",
+    "label": "#artofed",
+    "hashtags": [
+      "#artofed"
+    ],
+    "title": "#realismtoabstraction #portrait #comics #collegeart #collegeartprofessor #comi\u2026",
+    "excerpt": "#realismtoabstraction #portrait #comics #collegeart #collegeartprofessor #comicsinarteducation #artofed",
+    "accent": "#E44398",
+    "featured": false,
+    "media_type": "IMAGE",
+    "permalink": "https://www.instagram.com/p/DfivcrAMtAy/",
+    "timestamp": "2026-11-10T01:36:45+0000",
+    "image_kind": "image"
+  },
+  {
     "id": "instagram-18121745416954449",
     "instagram_media_id": "18121745416954449",
     "image": "assets/instagram/18121745416954449.jpg",
@@ -19,7 +38,7 @@
   {
     "id": "instagram-18219348862358465",
     "instagram_media_id": "18219348862358465",
-    "image": "assets/instagram/18219348862358465.jpg",
+    "image": "assets/manual/IG-Gallery-placeholder.png",
     "alt": "Instagram post shared by the art education community",
     "source": "Instagram mention",
     "label": "@theartofed",
@@ -31,7 +50,7 @@
     "media_type": "VIDEO",
     "timestamp": "2026-11-06T00:14:05+0000",
     "source_image_url": "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/888066563_1472349801709004_2893749044022771197_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=4q0ePqn0gsIQ7kNvwGlv4a6&_nc_oc=AdrR8BbgXh-Pg8wmo0YUUMfIZ2pQ5DRwWVGwQlRM5oBj6SRMJB0koyWKHSmt_qMiseo&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&edm=AL-3X8kEAAAA&_nc_gid=__jvVbY3_lVz7ZUb9OCJOA&_nc_tpa=Q5bMBQLswiJXWSbSx4pW4kVY1uHjcsEI-PwBnzhsQo7Ap_HEXozNGGavsNB_z88K_TpUoIr38cGI-2_ikw&oh=00_AQQ4pV-dx9xZyl--zfB6-oPAXDDplyFt1IzK7BVRAr8QSA&oe=6AF2E457",
-    "image_kind": "image"
+    "image_kind": "fallback"
   },
   {
     "id": "instagram-18126479884873832",
