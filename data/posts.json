@@ -38,7 +38,7 @@
   {
     "id": "instagram-18122702576050640",
     "instagram_media_id": "18122702576050640",
-    "image": "assets/instagram/18122702576050640.jpg",
+    "image": "assets/manual/IG-Gallery-placeholder.png",
     "alt": "Instagram post shared by the art education community",
     "source": "Instagram mention",
     "label": "@theartofed",
@@ -50,7 +50,7 @@
     "media_type": "VIDEO",
     "timestamp": "2026-11-20T21:36:02+0000",
     "source_image_url": "https://scontent-sea5-1.cdninstagram.com/v/t51.82787-15/918803262_18649508134061100_4075374464910120791_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=J_btTJPyejQQ7kNvwE7nrCC&_nc_oc=AdotEfGfI5c1E9Uma4Gwkasu0o7dmHz8HXCX1x4NSHv3UqzG2jZkTyzqP7NXXD71o2s&_nc_zt=23&_nc_ht=scontent-sea5-1.cdninstagram.com&edm=AJ-jyNUEAAAA&_nc_gid=3eQ7WfHSt0NkwqDIjJiDcQ&_nc_tpa=Q5bMBQIUZ5woQTDKugnRBqG-5VxEyvow6frHyLCWvxyVBJIhJzbXfBIdv2P355h22TGh-ncSBeqdyoZ1Qw&_nc_ct=RQosPBUKFQQAAAA&oh=00_AQQnxR7ztzcgrX6WxatBBaWV0aKTLjAH6FLXybhDIa4Cwg&oe=6B06B9C3",
-    "image_kind": "image"
+    "image_kind": "fallback"
   },
   {
     "id": "instagram-18387932503236387",
